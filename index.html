@@ -4,147 +4,299 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tekio Salud</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
-    --azul: #3B6FE8;
-    --azul-dark: #2a54c4;
+    --azul: #888fc7;
+    --azul-dark: #6d74b0;
+    --azul-light: #eeeef8;
     --texto: #1a1a2e;
     --gris: #6b7280;
-    --fondo-claro: #f8faff;
+    --fondo-claro: #fdf8f8;
     --borde: #e5e7eb;
+    --rosa-fondo: #fce8e8;
   }
-  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--texto); background: #fff; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--texto);
+    background: #fff;
+  }
 
-  /* NAVBAR */
+  /* ── NAVBAR ── */
   nav {
     position: sticky; top: 0; z-index: 100;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 0 64px; height: 72px;
-    background: #fff; border-bottom: 1px solid var(--borde);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 0 48px;
+    height: 72px;
+    background: #fff;
+    border-bottom: 1px solid var(--borde);
   }
-  .logo { font-size: 28px; font-weight: 800; color: var(--azul); letter-spacing: -1px; }
+  .nav-left { /* empty spacer */ }
+  .logo {
+    font-family: 'Nunito', sans-serif;
+    font-size: 34px;
+    font-weight: 900;
+    color: var(--azul);
+    letter-spacing: -1px;
+    text-align: center;
+    justify-self: center;
+  }
+  .nav-right { display: flex; justify-content: flex-end; }
   .nav-cta {
-    background: var(--azul); color: #fff;
-    border: none; border-radius: 8px;
-    padding: 10px 22px; font-size: 15px; font-weight: 600;
-    cursor: pointer; transition: background .2s;
+    background: transparent;
+    color: var(--azul);
+    border: 1.5px solid var(--azul);
+    border-radius: 8px;
+    padding: 9px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
     text-decoration: none;
   }
-  .nav-cta:hover { background: var(--azul-dark); }
-
-  /* HERO */
-  .hero {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 96px 64px 80px;
-    max-width: 1200px; margin: 0 auto;
-    gap: 48px;
+  .nav-cta:hover {
+    background: var(--azul);
+    color: #fff;
   }
-  .hero-left { flex: 1; max-width: 560px; }
+
+  /* ── HERO ── */
+  .hero-section {
+    background: var(--rosa-fondo);
+    padding: 72px 48px 80px;
+  }
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hero-left {}
   .hero-tag {
     display: inline-block;
-    background: #EEF3FD; color: var(--azul);
-    font-size: 13px; font-weight: 600;
-    padding: 6px 14px; border-radius: 20px;
-    margin-bottom: 24px; letter-spacing: .3px;
+    background: var(--azul-light);
+    color: var(--azul);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
   }
   h1 {
-    font-size: 52px; font-weight: 800; line-height: 1.1;
-    letter-spacing: -1.5px; margin-bottom: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 46px;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 18px;
     color: var(--texto);
   }
   h1 span { color: var(--azul); }
   .hero-sub {
-    font-size: 18px; color: var(--gris); line-height: 1.6;
-    margin-bottom: 36px; max-width: 460px;
+    font-size: 17px;
+    color: var(--gris);
+    line-height: 1.65;
+    margin-bottom: 32px;
+    max-width: 440px;
   }
   .btn-primary {
-    background: var(--azul); color: #fff;
-    border: none; border-radius: 10px;
-    padding: 16px 32px; font-size: 17px; font-weight: 700;
-    cursor: pointer; transition: background .2s, transform .1s;
-    text-decoration: none; display: inline-block;
+    background: var(--azul);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 15px 36px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+    text-decoration: none;
+    display: inline-block;
   }
-  .btn-primary:hover { background: var(--azul-dark); transform: translateY(-1px); }
+  .btn-primary:hover {
+    background: var(--azul-dark);
+    transform: translateY(-1px);
+  }
 
-  .hero-right { flex: 1; max-width: 500px; }
-  .mockup {
-    background: #fff; border: 1px solid var(--borde);
-    border-radius: 16px; padding: 20px;
-    box-shadow: 0 20px 60px rgba(59,111,232,.12);
+  /* Hero image */
+  .hero-right {
+    display: flex;
+    justify-content: center;
   }
-  .mockup-header {
-    display: flex; align-items: center; gap: 10px;
-    padding-bottom: 14px; border-bottom: 1px solid var(--borde);
-    margin-bottom: 16px;
+  .hero-img-wrap {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(136,143,199,.2);
+    background: #d8d4ec;
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .mockup-avatar {
-    width: 38px; height: 38px; border-radius: 50%;
-    background: var(--azul); display: flex; align-items: center;
-    justify-content: center; color: #fff; font-weight: 700; font-size: 15px;
+  .hero-img-placeholder {
+    /* Simulates a doctor photo — replace with <img> */
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #c8cde8 0%, #e8d6d6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
   }
-  .mockup-name { font-weight: 700; font-size: 14px; }
-  .mockup-status { font-size: 12px; color: #22c55e; }
-  .chat { display: flex; flex-direction: column; gap: 10px; }
-  .msg { max-width: 82%; padding: 10px 14px; border-radius: 12px; font-size: 14px; line-height: 1.5; }
-  .msg.bot { background: var(--fondo-claro); border: 1px solid var(--borde); align-self: flex-start; border-radius: 4px 12px 12px 12px; }
-  .msg.user { background: var(--azul); color: #fff; align-self: flex-end; border-radius: 12px 4px 12px 12px; }
-  .msg-label { font-size: 11px; color: var(--gris); margin-bottom: 2px; }
-  .msg-label.right { text-align: right; }
-  .powered { font-size: 11px; color: var(--gris); text-align: center; margin-top: 12px; }
 
-  /* STATS */
+  /* ── STATS ── */
   .stats {
-    background: var(--azul); padding: 48px 64px;
-    display: flex; justify-content: center; gap: 80px;
+    background: var(--azul);
+    padding: 48px 48px;
+    display: flex;
+    justify-content: center;
+    gap: 0;
   }
-  .stat { text-align: center; color: #fff; }
-  .stat-num { font-size: 52px; font-weight: 800; letter-spacing: -2px; line-height: 1; }
-  .stat-label { font-size: 15px; opacity: .85; margin-top: 6px; max-width: 180px; }
+  .stat {
+    text-align: center;
+    color: #fff;
+    flex: 1;
+    max-width: 280px;
+    padding: 0 32px;
+    position: relative;
+  }
+  .stat + .stat::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 10%; height: 80%;
+    width: 1px;
+    background: rgba(255,255,255,.25);
+  }
+  .stat-num {
+    font-family: 'Nunito', sans-serif;
+    font-size: 56px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 14px;
+    opacity: .85;
+    margin-top: 8px;
+    line-height: 1.4;
+  }
 
-  /* FEATURES */
-  .features { padding: 96px 64px; max-width: 1200px; margin: 0 auto; }
-  .features-header { text-align: center; margin-bottom: 64px; }
-  .features-header h2 { font-size: 38px; font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; }
-  .features-header p { font-size: 17px; color: var(--gris); max-width: 600px; margin: 0 auto; }
-  .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  /* ── FEATURES ── */
+  .features {
+    padding: 96px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .features-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .features-header h2 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: -.5px;
+    margin-bottom: 12px;
+  }
+  .features-header h2 span { color: var(--azul); }
+  .features-header p {
+    font-size: 16px;
+    color: var(--gris);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
   .feature-card {
-    background: var(--fondo-claro); border: 1px solid var(--borde);
-    border-radius: 16px; padding: 32px;
+    background: #fff;
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    padding: 28px;
+    transition: box-shadow .2s, transform .2s;
+  }
+  .feature-card:hover {
+    box-shadow: 0 8px 32px rgba(136,143,199,.15);
+    transform: translateY(-2px);
   }
   .feature-icon {
-    width: 48px; height: 48px; border-radius: 12px;
-    background: #EEF3FD; display: flex; align-items: center;
-    justify-content: center; font-size: 22px; margin-bottom: 18px;
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: var(--azul-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    margin-bottom: 16px;
   }
-  .feature-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
-  .feature-card p { font-size: 15px; color: var(--gris); line-height: 1.6; }
+  .feature-card h3 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .feature-card p {
+    font-size: 14px;
+    color: var(--gris);
+    line-height: 1.6;
+  }
 
-  /* CTA FINAL */
+  /* ── CTA FINAL ── */
   .cta-final {
-    background: var(--fondo-claro); border-top: 1px solid var(--borde);
-    text-align: center; padding: 96px 64px;
+    background: var(--rosa-fondo);
+    text-align: center;
+    padding: 96px 48px;
   }
-  .cta-final h2 { font-size: 38px; font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; }
-  .cta-final p { font-size: 17px; color: var(--gris); margin-bottom: 36px; }
+  .cta-final h2 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: -.5px;
+    margin-bottom: 14px;
+  }
+  .cta-final p {
+    font-size: 17px;
+    color: var(--gris);
+    margin-bottom: 32px;
+  }
 
-  /* FOOTER */
+  /* ── FOOTER ── */
   footer {
-    background: var(--texto); color: rgba(255,255,255,.6);
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 28px 64px; font-size: 14px;
+    background: var(--texto);
+    color: rgba(255,255,255,.55);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 48px;
+    font-size: 14px;
   }
-  footer .logo-footer { color: #fff; font-size: 22px; font-weight: 800; letter-spacing: -1px; }
+  .logo-footer {
+    font-family: 'Nunito', sans-serif;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: -1px;
+  }
 
+  /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    nav { padding: 0 24px; }
-    .hero { flex-direction: column; padding: 60px 24px 48px; }
+    nav { padding: 0 20px; }
+    .hero-section { padding: 48px 20px 56px; }
+    .hero { grid-template-columns: 1fr; }
     .hero-right { display: none; }
-    h1 { font-size: 36px; }
-    .stats { flex-direction: column; gap: 32px; padding: 48px 24px; }
-    .features { padding: 60px 24px; }
+    h1 { font-size: 34px; }
+    .hero-sub { max-width: 100%; }
+    .stats { flex-direction: column; align-items: center; gap: 32px; padding: 48px 24px; }
+    .stat + .stat::before { display: none; }
+    .features { padding: 64px 20px; }
     .features-grid { grid-template-columns: 1fr; }
-    .cta-final { padding: 60px 24px; }
+    .cta-final { padding: 64px 20px; }
     footer { flex-direction: column; gap: 12px; padding: 24px; text-align: center; }
   }
 </style>
@@ -153,37 +305,24 @@
 
 <!-- NAVBAR -->
 <nav>
+  <div class="nav-left"></div>
   <span class="logo">tekio</span>
-  <a href="#demo" class="nav-cta">Pruébalo gratis</a>
+  <div class="nav-right">
+    <a href="#demo" class="nav-cta">Pruébalo gratis</a>
+  </div>
 </nav>
 
 <!-- HERO -->
-<section style="background:#fff;">
+<section class="hero-section">
   <div class="hero">
     <div class="hero-left">
-      <span class="hero-tag">Para médicos en México 🇲🇽</span>
       <h1>Conecta con tus pacientes de forma <span>inteligente.</span></h1>
-      <p class="hero-sub">La plataforma que automatiza recordatorios, preguntas frecuentes y seguimiento post-consulta por WhatsApp.</p>
-      <a href="#demo" class="btn-primary">Pruébalo gratis →</a>
+      <p class="hero-sub">La plataforma que automatiza la comunicación paciente - WhatsApp.</p>
+      <a href="#demo" class="btn-primary">Solicita tu demo</a>
     </div>
     <div class="hero-right">
-      <div class="mockup">
-        <div class="mockup-header">
-          <div class="mockup-avatar">T</div>
-          <div>
-            <div class="mockup-name">Asistente Tekio</div>
-            <div class="mockup-status">● En línea</div>
-          </div>
-        </div>
-        <div class="chat">
-          <div class="msg-label">Asistente Tekio</div>
-          <div class="msg bot">¡Hola Laura! 👋 Te recuerdo que tienes consulta mañana a las 11am con la Dra. Cano. ¿Confirmas tu asistencia?</div>
-          <div class="msg-label right">Laura (paciente)</div>
-          <div class="msg user">Sí, ahí estaré. ¿Debo llevar algo?</div>
-          <div class="msg-label">Asistente Tekio</div>
-          <div class="msg bot">Perfecto ✅ Te recomiendo traer tus últimos estudios de laboratorio. ¿Tienes alguna duda más?</div>
-        </div>
-        <div class="powered">⚡ Impulsado por Claude AI</div>
+      <div class="hero-img-wrap">
+        <img src="doctor.jpg" alt="Doctor con smartphone" style="width:100%;height:100%;object-fit:cover;border-radius:20px;">
       </div>
     </div>
   </div>
@@ -208,8 +347,8 @@
 <!-- FEATURES -->
 <section class="features">
   <div class="features-header">
-    <h2>Todo lo que necesitas para una comunicación efectiva</h2>
-    <p>Herramientas diseñadas para médicos en México que quieren ofrecer una experiencia excepcional a sus pacientes.</p>
+    <h2>Todo lo que necesitas para una <span>comunicación efectiva</span></h2>
+    <p>Herramientas diseñadas para doctores en México que quieren ofrecer una experiencia excepcional a sus pacientes.</p>
   </div>
   <div class="features-grid">
     <div class="feature-card">
@@ -239,14 +378,10 @@
 <section class="cta-final" id="demo">
   <h2>¿Listo para transformar tu consultorio?</h2>
   <p>Únete a los médicos que ya automatizan su comunicación con Tekio Salud.</p>
-  <a href="mailto:holatekio@gmail.com" class="btn-primary">Pruébalo gratis →</a>
+  <a href="/cdn-cgi/l/email-protection#5d3532313c29383634321d3a303c3431733e3230" class="btn-primary">Solicita tu demo</a>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <span class="logo-footer">tekio</span>
-  <span>© 2026 Tekio Salud. Todos los derechos reservados.</span>
-</footer>
-
-</body>
-</html>
+  <span>© 2026 Tekio Salud. Todos los derechos res
