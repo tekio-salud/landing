@@ -241,26 +241,26 @@
   }
 
   async function cwInit() {
+    let bienvenida = '¡Hola Javier! 👋 Soy Tekio, el asistente de tu médico. ¿Con qué te puedo ayudar hoy?';
     try {
       const r = await fetch(`${RAILWAY_URL}/doctor-data`);
       const data = await r.json();
-      // Actualizar avatar nav con inicial del nombre
-      if (data.nombres) {
+      if (data && data.nombres && data.apellidos) {
         document.getElementById('navAvatar').textContent = data.nombres.charAt(0).toUpperCase();
+        const trato = data.trato && data.trato !== 'nombre' ? data.trato + ' ' : '';
+        const nombre = `${trato}${data.nombres} ${data.apellidos}`;
+        const preposicion = data.trato === 'Dra.' ? 'de la' : 'del';
+        document.getElementById('cwName').textContent = data.trato === 'nombre'
+          ? `Asistente de ${nombre}`
+          : `Asistente ${preposicion} ${nombre}`;
+        bienvenida = `¡Hola Javier! 👋 Soy Tekio, el asistente ${preposicion} ${nombre}. ¿Con qué te puedo ayudar hoy?`;
       }
-      const trato = data.trato && data.trato !== 'nombre' ? data.trato + ' ' : '';
-      const nombre = `${trato}${data.nombres} ${data.apellidos}`;
-      const preposicion = data.trato === 'Dra.' ? 'de la' : 'del';
-      document.getElementById('cwName').textContent = data.trato === 'nombre'
-        ? `Asistente de ${nombre}`
-        : `Asistente ${preposicion} ${nombre}`;
-      document.getElementById('cwLoading').remove();
-      const bienvenida = `¡Hola! 👋 Soy Tekio, el asistente ${preposicion} ${nombre}. ¿Con qué te puedo ayudar hoy?`;
-      cwAppendMsg('bot', bienvenida, 'Asistente Tekio');
-      cwHistory.push({ role: 'assistant', content: bienvenida });
     } catch(e) {
-      document.getElementById('cwLoading').innerHTML = '⚠️ No se pudo cargar la información del consultorio.';
+      // Fetch falló — mostramos bienvenida genérica
     }
+    document.getElementById('cwLoading').remove();
+    cwAppendMsg('bot', bienvenida, 'Asistente Tekio');
+    cwHistory.push({ role: 'assistant', content: bienvenida });
   }
 
   function cwAppendMsg(role, text, label) {
