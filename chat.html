@@ -247,13 +247,21 @@
       const data = await r.json();
       if (data && data.nombres && data.apellidos) {
         document.getElementById('navAvatar').textContent = data.nombres.charAt(0).toUpperCase();
-        const trato = data.trato && data.trato !== 'nombre' ? data.trato + ' ' : '';
-        const nombre = `${trato}${data.nombres} ${data.apellidos}`;
-        const preposicion = data.trato === 'Dra.' ? 'de la' : 'del';
-        document.getElementById('cwName').textContent = data.trato === 'nombre'
-          ? `Asistente de ${nombre}`
-          : `Asistente ${preposicion} ${nombre}`;
-        bienvenida = `¡Hola Javier! 👋 Soy Tekio, el asistente ${preposicion} ${nombre}. ¿Con qué te puedo ayudar hoy?`;
+        const trato = data.trato;
+        let nombreCompleto, articulo;
+        if (trato === 'Dra.') {
+          nombreCompleto = `Dra. ${data.nombres} ${data.apellidos}`;
+          articulo = 'de la';
+        } else if (trato === 'nombre') {
+          nombreCompleto = `${data.nombres} ${data.apellidos}`;
+          articulo = 'de';
+        } else {
+          // 'Dr.' o sin trato (fallback)
+          nombreCompleto = `Dr. ${data.nombres} ${data.apellidos}`;
+          articulo = 'del';
+        }
+        document.getElementById('cwName').textContent = `Asistente ${articulo} ${nombreCompleto}`;
+        bienvenida = `¡Hola Javier! 👋 Soy Tekio, el asistente ${articulo} ${nombreCompleto}. ¿Con qué te puedo ayudar hoy?`;
       }
     } catch(e) {
       // Fetch falló — mostramos bienvenida genérica
