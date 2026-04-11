@@ -4,211 +4,442 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tekio Salud</title>
-
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23888fc7'/><text x='50' y='68' font-family='Arial Black,sans-serif' font-size='58' font-weight='900' text-anchor='middle' fill='white'>T</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  :root {
-    --azul: #888fc7;
-    --azul-dark: #6d74b0;
-    --texto: #1a1a2e;
-    --gris: #6b7280;
-    --borde: #e5e7eb;
-    --verde: #2a9d73;
-  }
-  html, body {
-    height: 100%; font-family: 'Inter', -apple-system, sans-serif;
-    color: var(--texto); background: #f0f4f8;
-  }
-  .page-wrap { display: flex; flex-direction: column; min-height: 100vh; }
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --azul: #888fc7;
+  --azul-dark: #6d74b0;
+  --azul-light: #eeeef8;
+  --azul-soft: #f4f4fb;
+  --texto: #1a1a2e;
+  --gris: #6b7280;
+  --gris-light: #9ca3af;
+  --borde: #e5e7eb;
+  --verde: #2a9d73;
+  --verde-light: #e6f7f2;
+  --fondo: #f7f7fb;
+}
+html, body { height:100%; font-family:'Inter', sans-serif; color:var(--texto); background:var(--fondo); }
+.page-wrap { display:flex; flex-direction:column; min-height:100vh; }
 
-  /* ── NAV (mismo que chat) ── */
-  nav {
-    background: var(--azul);
-    display: flex; align-items: center;
-    padding: 0 32px; height: 68px;
-    flex-shrink: 0; z-index: 10; gap: 0;
-  }
-  .nav-logo {
-    font-family: 'Nunito', sans-serif; font-size: 30px; font-weight: 900;
-    color: #fff; letter-spacing: -1px; text-decoration: none; flex-shrink: 0;
-    margin-right: 40px;
-  }
-  .nav-tabs { display: flex; align-items: stretch; gap: 4px; height: 100%; flex: 1; }
-  .nav-tab {
-    display: flex; align-items: center; gap: 8px;
-    padding: 0 20px; font-size: 14px; font-weight: 600;
-    color: rgba(255,255,255,.75); text-decoration: none;
-    border-bottom: 3px solid transparent;
-    transition: color .2s, border-color .2s;
-    white-space: nowrap;
-  }
-  .nav-tab:hover { color: #fff; }
-  .nav-tab.active { color: #fff; border-bottom-color: #fff; }
-  .nav-avatar {
-    width: 40px; height: 40px; border-radius: 50%;
-    background: var(--verde); color: #fff;
-    font-family: 'Nunito', sans-serif; font-size: 18px; font-weight: 900;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; margin-left: auto; box-shadow: 0 2px 8px rgba(0,0,0,.2);
-  }
+/* ── NAV ── */
+nav {
+  background:var(--azul); display:flex; align-items:center;
+  padding:0 32px; height:68px; flex-shrink:0; z-index:10;
+}
+.nav-logo {
+  font-family:'Nunito',sans-serif; font-size:30px; font-weight:900;
+  color:#fff; letter-spacing:-1px; text-decoration:none; flex-shrink:0; margin-right:40px;
+}
+.nav-tabs { display:flex; align-items:stretch; gap:4px; height:100%; flex:1; }
+.nav-tab {
+  display:flex; align-items:center; gap:8px; padding:0 20px;
+  font-size:14px; font-weight:600; color:rgba(255,255,255,.7);
+  text-decoration:none; border-bottom:3px solid transparent;
+  transition:color .2s, border-color .2s; white-space:nowrap;
+}
+.nav-tab:hover { color:#fff; }
+.nav-tab.active { color:#fff; border-bottom-color:#fff; }
+.nav-avatar {
+  width:40px; height:40px; border-radius:50%; background:var(--verde);
+  color:#fff; font-family:'Nunito',sans-serif; font-size:18px; font-weight:900;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; margin-left:auto;
+}
 
-  /* ── EN CONSTRUCCIÓN ── */
-  .wip-wrap {
-    flex: 1; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 48px 24px; text-align: center;
-  }
-  .wip-icon {
-    font-size: 72px; margin-bottom: 24px;
-    animation: wip-float 3s ease-in-out infinite;
-  }
-  @keyframes wip-float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-  .wip-title {
-    font-family: 'Nunito', sans-serif; font-size: 32px; font-weight: 900;
-    color: var(--texto); margin-bottom: 12px; letter-spacing: -.5px;
-  }
-  .wip-sub {
-    font-size: 16px; color: var(--gris); line-height: 1.65;
-    max-width: 420px; margin: 0 auto 36px;
-  }
-  /* Barra de progreso animada */
-  .wip-progress-wrap {
-    width: 100%; max-width: 360px; margin: 0 auto 40px;
-  }
-  .wip-progress-label {
-    display: flex; justify-content: space-between;
-    font-size: 12px; font-weight: 600; color: var(--gris); margin-bottom: 8px;
-  }
-  .wip-progress-track {
-    height: 8px; background: var(--borde); border-radius: 50px; overflow: hidden;
-  }
-  .wip-progress-bar {
-    height: 100%; width: 0%; background: linear-gradient(90deg, var(--azul), var(--verde));
-    border-radius: 50px; animation: wip-fill 2s ease-out forwards;
-    animation-delay: .3s;
-  }
-  @keyframes wip-fill { to { width: 35%; } }
-  /* Features próximamente */
-  .wip-features {
-    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
-    max-width: 560px; margin: 0 auto;
-  }
-  .wip-feature {
-    background: #fff; border: 1px solid var(--borde); border-radius: 14px;
-    padding: 18px 22px; text-align: left; flex: 1; min-width: 160px;
-    box-shadow: 0 2px 12px rgba(136,143,199,.08);
-  }
-  .wip-feature-icon { font-size: 22px; margin-bottom: 10px; }
-  .wip-feature-name { font-size: 13px; font-weight: 700; color: var(--texto); margin-bottom: 4px; }
-  .wip-feature-desc { font-size: 12px; color: var(--gris); line-height: 1.5; }
-  .wip-badge {
-    display: inline-block; margin-top: 8px; padding: 3px 10px;
-    background: var(--azul-light, #eeeef8); color: var(--azul);
-    border-radius: 50px; font-size: 11px; font-weight: 600;
-  }
-  .btn-back {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--azul); color: #fff; border: none; border-radius: 50px;
-    padding: 13px 28px; font-size: 15px; font-weight: 600;
-    cursor: pointer; text-decoration: none; font-family: inherit;
-    transition: background .2s, transform .15s; margin-top: 40px;
-  }
-  .btn-back:hover { background: var(--azul-dark); transform: translateY(-1px); }
+/* ── HERO SLIM ── */
+.hero-slim {
+  background: #fce8e8;
+  padding: 28px 40px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+.hero-greeting {
+  font-family: 'Nunito', sans-serif; font-size: 22px; font-weight: 900;
+  color: var(--texto); letter-spacing: -.3px; margin-bottom: 4px;
+}
+.hero-sub-txt { font-size: 13px; color: var(--gris); }
+.hero-kpis { display: flex; gap: 12px; flex-shrink: 0; }
+.kpi-card {
+  background: #fff; border: 1.5px solid var(--azul-light);
+  border-radius: 14px; padding: 14px 22px; text-align: center;
+  min-width: 130px; box-shadow: 0 2px 8px rgba(136,143,199,.10);
+}
+.kpi-card-verde { border-color: var(--verde-light); }
+.kpi-card-num {
+  font-family: 'Nunito', sans-serif; font-size: 32px; font-weight: 900;
+  color: var(--azul); line-height: 1; margin-bottom: 4px;
+}
+.kpi-card-verde .kpi-card-num { color: var(--verde); }
+.kpi-card-label { font-size: 11px; color: var(--gris); line-height: 1.3; }
 
-  @media (max-width: 768px) {
-    nav { padding: 0 16px; height: 58px; }
-    .nav-logo { font-size: 24px; margin-right: 20px; }
-    .nav-tab { padding: 0 12px; font-size: 13px; }
-    .wip-title { font-size: 26px; }
-    .wip-features { flex-direction: column; }
-  }
+/* ── MAIN CONTENT ── */
+.main { padding:36px 40px 56px; max-width:1200px; width:100%; margin:0 auto; }
+
+/* ── GRID 2 columnas ── */
+.grid-top { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px; }
+
+/* ── CARDS ── */
+.card {
+  background:#fff; border-radius:20px; border:1px solid var(--borde);
+  box-shadow:0 2px 12px rgba(136,143,199,.07); overflow:hidden;
+  animation:fadeUp .35s ease both;
+}
+.card:nth-child(2) { animation-delay:.06s; }
+
+.card-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 24px 16px; border-bottom:1px solid var(--borde);
+}
+.card-title {
+  font-family:'Nunito',sans-serif; font-size:16px; font-weight:900;
+  color:var(--texto); display:flex; align-items:center; gap:8px;
+}
+.pill {
+  font-size:11px; font-weight:700; padding:3px 10px; border-radius:50px;
+  font-family:'Inter',sans-serif;
+}
+.pill-azul { background:var(--azul-light); color:var(--azul-dark); }
+.pill-verde { background:var(--verde-light); color:var(--verde); }
+.ver-link { font-size:13px; font-weight:600; color:var(--azul); text-decoration:none; }
+.ver-link:hover { color:var(--azul-dark); }
+
+/* ── LISTA MENSAJES ── */
+.msg-list { padding:4px 0; }
+.msg-item {
+  display:flex; align-items:center; gap:14px;
+  padding:14px 24px; border-bottom:1px solid var(--borde);
+  transition:background .15s; cursor:pointer;
+}
+.msg-item:last-child { border-bottom:none; }
+.msg-item:hover { background:var(--azul-soft); }
+
+.msg-avatar {
+  width:38px; height:38px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Nunito',sans-serif; font-size:13px; font-weight:900;
+  color:var(--azul-dark); background:var(--azul-light);
+}
+.msg-body { flex:1; min-width:0; }
+.msg-name { font-size:14px; font-weight:600; color:var(--texto); margin-bottom:2px; }
+.msg-preview {
+  font-size:12px; color:var(--gris); white-space:nowrap;
+  overflow:hidden; text-overflow:ellipsis; max-width:240px;
+}
+.msg-right { display:flex; flex-direction:column; align-items:flex-end; gap:5px; flex-shrink:0; }
+.msg-time { font-size:11px; color:var(--gris-light); }
+
+/* Indicador de nuevo — punto jacaranda, no rojo */
+.msg-dot {
+  width:7px; height:7px; border-radius:50%;
+  background:var(--azul); flex-shrink:0;
+}
+
+/* ── ACCESO RÁPIDO ── */
+.acceso-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:16px; }
+.acceso-item {
+  display:flex; align-items:center; gap:12px;
+  background:var(--fondo); border:1px solid var(--borde);
+  border-radius:12px; padding:14px 16px;
+  cursor:pointer; transition:all .15s; text-decoration:none;
+}
+.acceso-item:hover { background:var(--azul-light); border-color:var(--azul); }
+.acceso-icon {
+  width:36px; height:36px; border-radius:10px;
+  background:#fff; display:flex; align-items:center; justify-content:center;
+  font-size:17px; flex-shrink:0; border:1px solid var(--borde);
+}
+.acceso-label { font-size:13px; font-weight:600; color:var(--texto); }
+.acceso-sub { font-size:11px; color:var(--gris); margin-top:1px; }
+
+/* ── HISTORIAL — PRÓXIMAMENTE ── */
+.card-full { animation-delay:.12s; }
+.cs-wrap { position:relative; }
+.cs-overlay {
+  position:absolute; inset:0; z-index:5;
+  background:rgba(247,247,251,.9); backdrop-filter:blur(3px);
+  border-radius:0 0 20px 20px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+}
+.cs-badge {
+  background:var(--azul); color:#fff;
+  font-family:'Nunito',sans-serif; font-size:13px; font-weight:800;
+  padding:6px 20px; border-radius:50px; letter-spacing:.3px;
+}
+.cs-desc { font-size:13px; color:var(--gris); }
+
+/* historial items fantasma */
+.hist-list { padding:4px 0; filter:blur(1px); pointer-events:none; }
+.hist-item {
+  display:flex; align-items:center; gap:14px;
+  padding:13px 24px; border-bottom:1px solid var(--borde);
+}
+.hist-item:last-child { border-bottom:none; }
+.hist-avatar {
+  width:36px; height:36px; border-radius:50%;
+  background:var(--verde-light); display:flex; align-items:center; justify-content:center;
+  font-family:'Nunito',sans-serif; font-size:13px; font-weight:900; color:var(--verde);
+}
+.hist-body { flex:1; }
+.hist-name { font-size:14px; font-weight:600; color:var(--texto); margin-bottom:2px; }
+.hist-preview { font-size:12px; color:var(--gris); }
+.hist-right { flex-shrink:0; }
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(10px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+@media (max-width:900px) {
+  nav { padding:0 16px; height:58px; }
+  .nav-logo { font-size:24px; margin-right:16px; }
+  .nav-tab { padding:0 10px; font-size:13px; }
+  .hero-slim { flex-direction:column; align-items:flex-start; padding:20px 16px 24px; }
+  .hero-kpis { width:100%; }
+  .kpi-card { flex:1; }
+  .main { padding:24px 16px 48px; }
+  .grid-top { grid-template-columns:1fr; }
+  .acceso-grid { grid-template-columns:1fr; }
+}
 </style>
 </head>
 <body>
-
 <div class="page-wrap">
 
-  <!-- NAV -->
-  <nav>
-    <a href="index.html" class="nav-logo">tekio</a>
-    <div class="nav-tabs">
-      <a class="nav-tab" href="chat.html">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        Prueba el chat
-      </a>
-      <a class="nav-tab active" href="dashboard.html">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        Dashboard
-      </a>
-    </div>
-    <div class="nav-avatar" id="navAvatar">T</div>
-  </nav>
-
-  <!-- EN CONSTRUCCIÓN -->
-  <div class="wip-wrap">
-    <div class="wip-icon">🚧</div>
-    <div class="wip-title">En construcción</div>
-    <div class="wip-sub">
-      Estamos construyendo tu dashboard. Pronto podrás ver métricas, historial de conversaciones y más desde aquí.
-    </div>
-
-    <div class="wip-progress-wrap">
-      <div class="wip-progress-label">
-        <span>Progreso</span>
-        <span>35%</span>
-      </div>
-      <div class="wip-progress-track">
-        <div class="wip-progress-bar"></div>
-      </div>
-    </div>
-
-    <div class="wip-features">
-      <div class="wip-feature">
-        <div class="wip-feature-icon">💬</div>
-        <div class="wip-feature-name">Conversaciones</div>
-        <div class="wip-feature-desc">Historial completo de chats con tus pacientes.</div>
-        <span class="wip-badge">Próximamente</span>
-      </div>
-      <div class="wip-feature">
-        <div class="wip-feature-icon">📊</div>
-        <div class="wip-feature-name">Métricas</div>
-        <div class="wip-feature-desc">Tasa de respuesta, citas agendadas y satisfacción.</div>
-        <span class="wip-badge">Próximamente</span>
-      </div>
-      <div class="wip-feature">
-        <div class="wip-feature-icon">⚙️</div>
-        <div class="wip-feature-name">Configuración</div>
-        <div class="wip-feature-desc">Ajusta el tono y respuestas de tu asistente.</div>
-        <span class="wip-badge">Próximamente</span>
-      </div>
-    </div>
-
-    <a href="chat.html" class="btn-back">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="15 18 9 12 15 6"/></svg>
-      Volver al chat
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">tekio</a>
+  <div class="nav-tabs">
+    <a class="nav-tab" href="chat.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Prueba el chat
     </a>
+    <a class="nav-tab active" href="dashboard.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </a>
+  </div>
+  <div class="nav-avatar" id="navAvatar">A</div>
+</nav>
+
+<!-- HERO SLIM -->
+<section class="hero-slim">
+  <div class="hero-left">
+    <div class="hero-greeting" id="welcomeNombre">Bienvenido de vuelta</div>
+    <div class="hero-sub" id="welcomeSub">Tekio ya resolvió la mayoría de tus mensajes.</div>
+  </div>
+  <div class="hero-kpis">
+    <div class="kpi-card">
+      <div class="kpi-card-num">5</div>
+      <div class="kpi-card-label">Mensajes pendientes</div>
+    </div>
+    <div class="kpi-card kpi-card-verde">
+      <div class="kpi-card-num">23</div>
+      <div class="kpi-card-label">Resueltos por Tekio hoy</div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- FILA SUPERIOR: Mensajes | Acceso rápido -->
+  <div class="grid-top">
+
+    <!-- MENSAJES -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          Mensajes que esperan tu respuesta
+          <span class="pill pill-azul">5</span>
+        </div>
+        <a href="#" class="ver-link">Ver todos</a>
+      </div>
+      <div class="msg-list">
+        <div class="msg-item">
+          <div class="msg-dot"></div>
+          <div class="msg-avatar">JM</div>
+          <div class="msg-body">
+            <div class="msg-name">Javier Méndez</div>
+            <div class="msg-preview">Tengo dolor desde hace 3 días, ¿me pueden ayudar?</div>
+          </div>
+          <div class="msg-right">
+            <span class="msg-time">hace 4 min</span>
+          </div>
+        </div>
+        <div class="msg-item">
+          <div class="msg-dot"></div>
+          <div class="msg-avatar">LR</div>
+          <div class="msg-body">
+            <div class="msg-name">Laura Rodríguez</div>
+            <div class="msg-preview">Mis síntomas empeoraron desde ayer.</div>
+          </div>
+          <div class="msg-right">
+            <span class="msg-time">hace 18 min</span>
+          </div>
+        </div>
+        <div class="msg-item">
+          <div class="msg-dot" style="background:transparent;"></div>
+          <div class="msg-avatar">CM</div>
+          <div class="msg-body">
+            <div class="msg-name">Carlos Morales</div>
+            <div class="msg-preview">¿Pueden revisar mis resultados de laboratorio?</div>
+          </div>
+          <div class="msg-right">
+            <span class="msg-time">hace 45 min</span>
+          </div>
+        </div>
+        <div class="msg-item">
+          <div class="msg-dot" style="background:transparent;"></div>
+          <div class="msg-avatar">SP</div>
+          <div class="msg-body">
+            <div class="msg-name">Sofía Pérez</div>
+            <div class="msg-preview">¿Cuál es el precio de la consulta?</div>
+          </div>
+          <div class="msg-right">
+            <span class="msg-time">hace 1h</span>
+          </div>
+        </div>
+        <div class="msg-item">
+          <div class="msg-dot" style="background:transparent;"></div>
+          <div class="msg-avatar">MG</div>
+          <div class="msg-body">
+            <div class="msg-name">Miguel García</div>
+            <div class="msg-preview">Confirmado para el martes, ¿a qué hora exactamente?</div>
+          </div>
+          <div class="msg-right">
+            <span class="msg-time">hace 2h</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACCESO RÁPIDO -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Acceso rápido</div>
+      </div>
+      <div class="acceso-grid">
+        <a href="#" class="acceso-item">
+          <div class="acceso-icon">📅</div>
+          <div>
+            <div class="acceso-label">Calendario</div>
+            <div class="acceso-sub">Citas del día</div>
+          </div>
+        </a>
+        <a href="#" class="acceso-item">
+          <div class="acceso-icon">👥</div>
+          <div>
+            <div class="acceso-label">Pacientes</div>
+            <div class="acceso-sub">Directorio</div>
+          </div>
+        </a>
+        <a href="#" class="acceso-item">
+          <div class="acceso-icon">📋</div>
+          <div>
+            <div class="acceso-label">Expedientes</div>
+            <div class="acceso-sub">Historial clínico</div>
+          </div>
+        </a>
+        <a href="#" class="acceso-item">
+          <div class="acceso-icon">💬</div>
+          <div>
+            <div class="acceso-label">Conversaciones</div>
+            <div class="acceso-sub">Ver historial</div>
+          </div>
+        </a>
+        <a href="#" class="acceso-item">
+          <div class="acceso-icon">⚙️</div>
+          <div>
+            <div class="acceso-label">Configurar Tekio</div>
+            <div class="acceso-sub">Ajustar respuestas</div>
+          </div>
+        </a>
+        <a href="#" class="acceso-item">
+          <div class="acceso-icon">📊</div>
+          <div>
+            <div class="acceso-label">Métricas</div>
+            <div class="acceso-sub">Reportes semanales</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- HISTORIAL PRÓXIMAMENTE -->
+  <div class="card card-full">
+    <div class="card-header">
+      <div class="card-title">
+        Conversaciones resueltas por Tekio hoy
+        <span class="pill pill-verde">23 hoy</span>
+      </div>
+    </div>
+    <div class="cs-wrap">
+      <div class="cs-overlay">
+        <div class="cs-badge">Próximamente</div>
+        <div class="cs-desc">Aquí verás cada conversación que Tekio resolvió por ti</div>
+      </div>
+      <div class="hist-list">
+        <div class="hist-item">
+          <div class="hist-avatar">AP</div>
+          <div class="hist-body">
+            <div class="hist-name">Ana Puig</div>
+            <div class="hist-preview">Cita agendada para el martes 7 PM ✓</div>
+          </div>
+          <div class="hist-right"><span class="pill pill-verde">Resuelto</span></div>
+        </div>
+        <div class="hist-item">
+          <div class="hist-avatar">RL</div>
+          <div class="hist-body">
+            <div class="hist-name">Roberto López</div>
+            <div class="hist-preview">Dirección del consultorio enviada ✓</div>
+          </div>
+          <div class="hist-right"><span class="pill pill-verde">Resuelto</span></div>
+        </div>
+        <div class="hist-item">
+          <div class="hist-avatar">EM</div>
+          <div class="hist-body">
+            <div class="hist-name">Elena Martínez</div>
+            <div class="hist-preview">Horario de consulta confirmado ✓</div>
+          </div>
+          <div class="hist-right"><span class="pill pill-verde">Resuelto</span></div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>
+</div>
 
 <script>
-  // Cargar inicial del doctor para el avatar
-  async function loadAvatar() {
-    try {
-      const r = await fetch('https://web-production-c4962.up.railway.app/doctor-data');
-      const data = await r.json();
-      if (data.nombres) {
-        document.getElementById('navAvatar').textContent = data.nombres.charAt(0).toUpperCase();
+const RAILWAY_URL = 'https://web-production-c4962.up.railway.app';
+async function loadDoctor() {
+  try {
+    const r = await fetch(`${RAILWAY_URL}/doctor-data`);
+    const data = await r.json();
+    if (data && data.nombres) {
+      document.getElementById('navAvatar').textContent = data.nombres.charAt(0).toUpperCase();
+      const trato = data.trato;
+      let saludo = '';
+      if (trato === 'Dra.') saludo = `, Dra. ${data.nombres}`;
+      else if (trato === 'nombre') saludo = `, ${data.nombres}`;
+      else saludo = `, Dr. ${data.nombres}`;
+      // Hero greeting: "Bienvenido de vuelta, Dr. X"
+      const greetEl = document.getElementById('welcomeNombre');
+      greetEl.innerHTML = 'Bienvenido de vuelta' + (saludo ? ', <span style="color:var(--azul)">' + saludo.trim().replace(/^,\s*/, '') + '</span>' : '');
+      if (data.especialidad) {
+        document.getElementById('welcomeSub').textContent =
+          data.especialidad + ' · Tekio ya resolvió la mayoría de tus mensajes.';
       }
-    } catch(e) {}
-  }
-  loadAvatar();
+    }
+  } catch(e) {}
+}
+document.addEventListener('DOMContentLoaded', loadDoctor);
 </script>
 </body>
 </html>
